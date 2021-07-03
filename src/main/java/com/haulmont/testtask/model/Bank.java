@@ -22,6 +22,9 @@ public class Bank {
     @GeneratedValue
     private UUID id;
 
+    @Column(name = "bankName")
+    private String bankName;
+
     @OneToMany(cascade = CascadeType.ALL)
     private List<Customer> customers;
 
@@ -31,7 +34,8 @@ public class Bank {
     public Bank() {
     }
 
-    public Bank(List<Customer> customers, List<Credit> credits) {
+    public Bank(String bankName, List<Customer> customers, List<Credit> credits) {
+        this.bankName = bankName;
         this.customers = customers;
         this.credits = credits;
     }
@@ -43,6 +47,14 @@ public class Bank {
     public void setId(UUID id) {
         this.id = id;
     }
+    
+    public String getBankName() {
+        return this.bankName;
+    }
+
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
+    }
 
     public List<Customer> getCustomers() {
         return this.customers;
@@ -52,11 +64,11 @@ public class Bank {
         this.customers = customers;
     }
 
-    public List<Credit> getLoans() {
+    public List<Credit> getCredits() {
         return this.credits;
     }
 
-    public void setLoans(List<Credit> credits) {
+    public void setCredits(List<Credit> credits) {
         this.credits = credits;
     }
 }
