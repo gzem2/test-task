@@ -1,0 +1,74 @@
+.button {
+    text-decoration: none;
+    background: #25A6E1;
+    padding: 3px 5px;
+    color: #fff;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 14px;
+    border-radius: 2px;
+    border: 1px solid #1A87B9
+}
+
+input.button {
+    cursor: pointer;
+}
+
+.button-color-red {
+    background: #e125b2;
+    border: 1px solid #b91aa4
+}
+
+.button-sidebar {
+    background-color: transparent;
+    color: #000;
+    border: none;
+    font-size: 16px;
+    text-decoration: underline;
+    display: table-cell;
+}
+
+.button-inline {
+    display: inline;
+}
+
+h3 {
+    display: inline;
+}
+
+.div-sidebar-button {
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.column {
+    float: left;
+}
+
+.column-sidebar {
+    width: 10%;
+}
+
+.column-content {
+    width: 90%;
+}
+
+.column-content:after {
+    clear: left;
+}
+
+table {
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
+    width: 50%;
+}
+
+th {
+    background: SteelBlue;
+    color: white;
+}
+
+td, th {
+    border: 1px solid gray;
+    width: 25%;
+    text-align: left;
+    padding: 5px 10px;
+}
