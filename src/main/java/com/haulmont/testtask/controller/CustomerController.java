@@ -2,7 +2,10 @@ package com.haulmont.testtask.controller;
 
 import com.haulmont.testtask.model.Customer;
 import com.haulmont.testtask.service.CustomerService;
+
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +24,7 @@ public class CustomerController {
     public ModelAndView showAllCustomers() {
         ModelAndView modelAndView = new ModelAndView("customer/customer-list");
         modelAndView.addObject("listOfCustomers", customerService.getAllCustomers());
+
         return modelAndView;
     }
 
@@ -37,8 +41,9 @@ public class CustomerController {
     @GetMapping("/customer/edit/{id}")
     public ModelAndView showEditCustomerForm(@PathVariable UUID id) {
         ModelAndView modelAndView = new ModelAndView("customer/customer-form");
-        Customer customerForEdit = customerService.getCustomer(id);
+        Customer customerForEdit = customerService.getCustomer(id).orElseGet(() -> new Customer());
         modelAndView.addObject("customer", customerForEdit);
+
         return modelAndView;
     }
 
@@ -47,17 +52,21 @@ public class CustomerController {
         String postId = postBody.get("id");
         if(postId != null && !postId.trim().isEmpty()) {
             UUID id = UUID.fromString(postId);
-            Customer editCustomer = customerService.getCustomer(id);
-            if (editCustomer != null) {
+            
+            Optional<Customer> optEditCustomer = customerService.getCustomer(id);
+            if (optEditCustomer.isPresent()) {
+                Customer editCustomer = optEditCustomer.get();
+
                 editCustomer.setCustomerName(postBody.get("customerName"));
                 editCustomer.setPhone(postBody.get("phone"));
                 editCustomer.setEmail(postBody.get("email"));
                 editCustomer.setPassport(postBody.get("passport"));
+
                 customerService.saveCustomer(editCustomer);
             }
         } else {
             Customer newCustomer = new Customer(postBody.get("customerName"), postBody.get("phone"),
-                    postBody.get("email"), postBody.get("passport"));
+                    postBody.get("email"), postBody.get("passport"), new HashSet<>());
             customerService.saveCustomer(newCustomer);
         }
         return new ModelAndView("redirect:/customers");

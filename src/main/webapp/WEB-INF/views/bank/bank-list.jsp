@@ -3,9 +3,10 @@
 <jsp:include page="../shared/header.jsp" />
 
 <div class="column column-content">
-    <h3>Список банков - </h3>
-    <a class="button button-sidebar button-inline" href="${pageContext.request.contextPath}/bank/new">Добавить банк</a>
-    <br><br>
+    <h3>Список банков</h3>
+    <div class="toolbar">
+        <a class="button button-toolbar" href="${pageContext.request.contextPath}/bank/new">Добавить банк</a>
+    </div>
     <c:if test="${!empty listOfBanks}">
         <table class="tg">
             <tr>

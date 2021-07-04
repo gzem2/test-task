@@ -1,10 +1,12 @@
 package com.haulmont.testtask.model;
 
+import java.util.Set;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 /*
@@ -30,14 +32,18 @@ public class Customer {
     @Column(name = "passport")
     String passport;
 
+    @ManyToMany(mappedBy = "customers")
+    private Set<Bank> banks;
+
     public Customer() {
     }
 
-    public Customer(String customerName, String phone, String email, String passport) {
+    public Customer(String customerName, String phone, String email, String passport, Set<Bank> banks) {
         this.customerName = customerName;
         this.phone = phone;
         this.email = email;
         this.passport = passport;
+        this.banks = banks;
     }
 
     public UUID getId() {
@@ -78,5 +84,13 @@ public class Customer {
 
     public void setPassport(String passport) {
         this.passport = passport;
+    }
+    
+    public Set<Bank> getBanks() {
+        return this.banks;
+    }
+
+    public void setBanks(Set<Bank> banks) {
+        this.banks = banks;
     }
 }

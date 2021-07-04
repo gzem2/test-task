@@ -1,6 +1,7 @@
 package com.haulmont.testtask.model;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import javax.persistence.CascadeType;
@@ -8,6 +9,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -25,8 +29,12 @@ public class Bank {
     @Column(name = "bankName")
     private String bankName;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Customer> customers;
+    @ManyToMany
+    @JoinTable(
+        name = "bankCustomers", 
+        joinColumns = @JoinColumn(name = "bankId"), 
+        inverseJoinColumns = @JoinColumn(name = "customerId"))
+    private Set<Customer> customers;
 
     @OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Credit> credits;
@@ -34,7 +42,7 @@ public class Bank {
     public Bank() {
     }
 
-    public Bank(String bankName, List<Customer> customers, List<Credit> credits) {
+    public Bank(String bankName, Set<Customer> customers, List<Credit> credits) {
         this.bankName = bankName;
         this.customers = customers;
         this.credits = credits;
@@ -56,11 +64,11 @@ public class Bank {
         this.bankName = bankName;
     }
 
-    public List<Customer> getCustomers() {
+    public Set<Customer> getCustomers() {
         return this.customers;
     }
 
-    public void setCustomers(List<Customer> customers) {
+    public void setCustomers(Set<Customer> customers) {
         this.customers = customers;
     }
 

@@ -41,11 +41,11 @@ public class Credit {
         this.id = id;
     }
 
-    public BigDecimal getLoanLimit() {
+    public BigDecimal getCreditLimit() {
         return this.creditLimit;
     }
 
-    public void setLoanLimit(BigDecimal creditLimit) {
+    public void setCreditLimit(BigDecimal creditLimit) {
         this.creditLimit = creditLimit;
     }
 

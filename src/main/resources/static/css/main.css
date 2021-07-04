@@ -13,6 +13,10 @@ input.button {
     cursor: pointer;
 }
 
+button.button {
+    cursor: pointer;
+}
+
 .button-color-red {
     background: #e125b2;
     border: 1px solid #b91aa4
@@ -31,13 +35,26 @@ input.button {
     display: inline;
 }
 
-h3 {
-    display: inline;
-}
-
 .div-sidebar-button {
     margin-top: 10px;
     margin-left: 10px;
+}
+
+.toolbar {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    height: 35px;
+    display: table;
+    vertical-align: middle;
+    padding-left: -10px;
+    display: table;
+    border-spacing: 5px;
+}
+
+.button-toolbar {
+    display: table-cell;
+    vertical-align: middle;
+    font-size: 1em !important;
 }
 
 .column {
@@ -71,4 +88,11 @@ td, th {
     width: 25%;
     text-align: left;
     padding: 5px 10px;
+}
+
+h3 {
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
+    margin-top: 10px;
+    margin-bottom: 0px;
+    margin-left: 5px;
 }
