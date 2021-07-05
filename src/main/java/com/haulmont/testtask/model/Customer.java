@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /*
@@ -26,7 +27,7 @@ public class Customer {
     @Column(name = "phone")
     String phone;
 
-    @Column(name="email")
+    @Column(name = "email")
     String email;
 
     @Column(name = "passport")
@@ -34,6 +35,9 @@ public class Customer {
 
     @ManyToMany(mappedBy = "customers")
     private Set<Bank> banks;
+
+    @OneToMany(mappedBy = "customer")
+    private Set<CreditOffer> creditOffers;
 
     public Customer() {
     }
@@ -85,12 +89,20 @@ public class Customer {
     public void setPassport(String passport) {
         this.passport = passport;
     }
-    
+
     public Set<Bank> getBanks() {
         return this.banks;
     }
 
     public void setBanks(Set<Bank> banks) {
         this.banks = banks;
+    }
+
+    public Set<CreditOffer> getCreditOffers() {
+        return this.creditOffers;
+    }
+
+    public void setCreditOffers(Set<CreditOffer> creditOffers) {
+        this.creditOffers = creditOffers;
     }
 }

@@ -13,16 +13,16 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 public class HibernateConf {
     @Primary
-    @Bean(name="entityManagerFactory")
+    @Bean(name = "entityManagerFactory")
     public LocalSessionFactoryBean sessionFactory() {
-            LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
-            sessionFactory.setDataSource(dataSource());
-            String[] models = new String[]{"com.haulmont.testtask.model"};
-            sessionFactory.setPackagesToScan(models);
-            sessionFactory.setHibernateProperties(hibernateProperties());
-    
-            return sessionFactory;
-        }
+        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
+        sessionFactory.setDataSource(dataSource());
+        String[] models = new String[] { "com.haulmont.testtask.model" };
+        sessionFactory.setPackagesToScan(models);
+        sessionFactory.setHibernateProperties(hibernateProperties());
+
+        return sessionFactory;
+    }
 
     @Bean
     public DataSource dataSource() {
@@ -30,7 +30,7 @@ public class HibernateConf {
         dataSource.setDriverClassName("org.hsqldb.jdbc.JDBCDriver");
         dataSource.setUrl("jdbc:hsqldb:file:HSQLDB/testdb;shutdown=true;hsqldb.write_delay=false;");
         dataSource.setUsername("sa");
-        dataSource.setPassword("sa");
+        dataSource.setPassword("");
 
         return dataSource;
     }

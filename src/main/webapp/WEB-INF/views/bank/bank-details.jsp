@@ -5,28 +5,58 @@
 <div class="column column-content">
     <h3>Данные банка &mdash; ${bank.bankName} </h3>
     <div class="toolbar">
-        <a class="button button-toolbar" href="${pageContext.request.contextPath}/credit/new?bank=${bank.id}"><div style="margin-left:5px;">Добавить кредит</div></a>
         <a class="button button-toolbar" href="${pageContext.request.contextPath}/bank/customer/new?bank=${bank.id}"><div style="margin-left:5px;">Добавить клиента</div></a>
+        <a class="button button-toolbar" href="${pageContext.request.contextPath}/credit/new?bank=${bank.id}"><div style="margin-left:5px;">Добавить тарифный план</div></a>
+        <a class="button button-toolbar" href="${pageContext.request.contextPath}/creditOffer/new?bank=${bank.id}"><div style="margin-left:5px;">Оформить кредит</div></a>
     </div>
-
-    <c:if test="${!empty bank.credits}">
+    <c:if test="${!empty creditOffers}">
         <table class="tg">
             <tr>
-                <th colspan="2">Кредиты банка &laquo;${bank.bankName}&raquo;:</th>
+                <th colspan="8">Кредиты банка &laquo;${bank.bankName}&raquo;:</th>
             </tr>
             <tr>
                 <th width="80">Id</th>
-                <th width="120">Наименование кредита</th>
+                <th width="120">Клиент</th>
+                <th width="120">Лимит по кредиту</th>
+                <th width="120">Процентная ставка</th>
+                <th width="120">Сумма кредита</th>
+                <th width="60">Платежи</th>
                 <th width="60">Редактировать</th>
                 <th width="60">Удалить</th>
             </tr>
-            <c:forEach items="$bank.credits}" var="credit">
+            <c:forEach items="${creditOffers}" var="creditOffer">
                 <tr>
-                    <td><a href="<c:url value='/bank/${bank.id}' />">${credit.id}</a></td>
-                    <td><a href="<c:url value='/bank/${bank.id}' />">${credit.creditLimit}</a></td>
-                    <td><a href="<c:url value='/bank/${bank.id}' />">${credit.interestRate}</a></td>
-                    <td><a href="<c:url value='/bank/edit/${bank.id}' />">Редактировать</a></td>
-                    <td><a href="<c:url value='/bank/delete/${bank.id}' />">Удалить</a></td>
+                    <td>${creditOffer.id}</td>
+                    <td>${creditOffer.customer.customerName}</td>
+                    <td>${creditOffer.credit.creditLimit}</td>
+                    <td>${creditOffer.credit.interestRate}%</td>
+                    <td>${creditOffer.creditSum}</td>
+                    <td><a href="<c:url value='/creditOffer/edit/${creditOffer.id}?bank=${bank.id}' />">Платежи</a></td>
+                    <td><a href="<c:url value='/creditOffer/edit/${creditOffer.id}?bank=${bank.id}' />">Редактировать</a></td>
+                    <td><a href="<c:url value='/creditOffer/delete/${creditOffer.id}?bank=${bank.id}' />">Удалить</a></td>
+                </tr>
+            </c:forEach>
+        </table>
+    </c:if>
+    <c:if test="${!empty bank.credits}">
+        <table class="tg">
+            <tr>
+                <th colspan="5">Тарифные планы банка &laquo;${bank.bankName}&raquo;:</th>
+            </tr>
+            <tr>
+                <th width="80">Id</th>
+                <th width="120">Лимит по кредиту</th>
+                <th width="120">Процентная ставка</th>
+                <th width="60">Редактировать</th>
+                <th width="60">Удалить</th>
+            </tr>
+            <c:forEach items="${bank.credits}" var="credit">
+                <tr>
+                    <td>${credit.id}</td>
+                    <td>${credit.creditLimit}</td>
+                    <td>${credit.interestRate}%</td>
+                    <td><a href="<c:url value='/credit/edit/${credit.id}?bank=${bank.id}' />">Редактировать</a></td>
+                    <td><a href="<c:url value='/credit/delete/${credit.id}?bank=${bank.id}' />">Удалить</a></td>
                 </tr>
             </c:forEach>
         </table>

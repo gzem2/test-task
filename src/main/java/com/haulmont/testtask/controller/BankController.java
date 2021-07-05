@@ -5,7 +5,6 @@ import com.haulmont.testtask.model.Credit;
 import com.haulmont.testtask.model.Customer;
 import com.haulmont.testtask.service.BankService;
 import com.haulmont.testtask.service.CustomerService;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -38,6 +37,7 @@ public class BankController {
     public ModelAndView showBank(@PathVariable UUID id) {
         ModelAndView modelAndView = new ModelAndView("bank/bank-details");
         modelAndView.addObject("bank", bankService.getBank(id).orElseGet(() -> new Bank()));
+        modelAndView.addObject("creditOffers", bankService.getCreditOffersForBankId(id));
         return modelAndView;
     }
 
@@ -49,14 +49,14 @@ public class BankController {
     @GetMapping("/bank/customer/new")
     public ModelAndView showNewBankCustomerForm(@RequestParam UUID bank, @RequestParam Optional<UUID> customer) {
         ModelAndView modelAndView = new ModelAndView("bank/bank-customer-form");
-        modelAndView.addObject("bank", bankService.getBank(bank).orElseGet(()-> new Bank()));
+        modelAndView.addObject("bank", bankService.getBank(bank).orElseGet(() -> new Bank()));
 
         if (customer.isPresent()) {
             modelAndView.addObject("customer", customerService.getCustomer(customer.get()));
         } else {
             modelAndView.addObject("customer", new Customer());
         }
-        
+
         modelAndView.addObject("searchCustomer", new Customer());
         return modelAndView;
     }
@@ -78,7 +78,8 @@ public class BankController {
     public ModelAndView addCustomerToBank(Customer customer, @RequestParam UUID bank) {
         Optional<Bank> optBank = bankService.getBank(bank);
 
-        if(optBank.isPresent()) {
+        if (optBank.isPresent()) {
+            customerService.saveCustomer(customer);
             bankService.addCustomerToBank(optBank.get(), customer);
         }
 
@@ -89,11 +90,11 @@ public class BankController {
     public ModelAndView removeCustomerFromBank(@RequestParam UUID bank, @RequestParam UUID customer) {
         Optional<Customer> optCustomer = customerService.getCustomer(customer);
 
-        if(optCustomer.isPresent()) {
+        if (optCustomer.isPresent()) {
             Customer customerForRemoval = optCustomer.get();
 
             Optional<Bank> optBank = bankService.getBank(bank);
-            if(optBank.isPresent()) {
+            if (optBank.isPresent()) {
                 bankService.removeCustomerFromBank(optBank.get(), customerForRemoval);
             }
         }
@@ -112,7 +113,7 @@ public class BankController {
     @PostMapping("/bank/new")
     public ModelAndView saveBank(@RequestParam Map<String, String> postBody) {
         String postId = postBody.get("id");
-        if(postId != null && !postId.trim().isEmpty()) {
+        if (postId != null && !postId.trim().isEmpty()) {
             UUID id = UUID.fromString(postId);
 
             Optional<Bank> optEditBank = bankService.getBank(id);
@@ -123,7 +124,7 @@ public class BankController {
                 bankService.saveBank(editBank);
             }
         } else {
-            Bank newBank = new Bank(postBody.get("bankName"), new HashSet<Customer>(), new ArrayList<Credit>());
+            Bank newBank = new Bank(postBody.get("bankName"), new HashSet<Customer>(), new HashSet<Credit>());
             bankService.saveBank(newBank);
         }
         return new ModelAndView("redirect:/banks");

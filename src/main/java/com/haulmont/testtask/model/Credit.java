@@ -1,11 +1,13 @@
 package com.haulmont.testtask.model;
 
 import java.math.BigDecimal;
+import java.util.Set;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /*
@@ -25,6 +27,9 @@ public class Credit {
     @Column(name = "interestRate")
     private Double interestRate;
 
+    @OneToMany(mappedBy = "credit", orphanRemoval = true)
+    private Set<CreditOffer> creditOffer;
+
     public Credit() {
     }
 
@@ -42,7 +47,11 @@ public class Credit {
     }
 
     public BigDecimal getCreditLimit() {
-        return this.creditLimit;
+        if (this.creditLimit != null) {
+            return new BigDecimal(this.creditLimit.stripTrailingZeros().toPlainString());
+        } else {
+            return this.creditLimit;
+        }
     }
 
     public void setCreditLimit(BigDecimal creditLimit) {
@@ -55,5 +64,13 @@ public class Credit {
 
     public void setInterestRate(Double interestRate) {
         this.interestRate = interestRate;
+    }
+
+    public Set<CreditOffer> getCreditOffers() {
+        return this.creditOffer;
+    }
+
+    public void setCreditOffers(Set<CreditOffer> creditOffer) {
+        this.creditOffer = creditOffer;
     }
 }

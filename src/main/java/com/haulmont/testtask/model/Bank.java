@@ -1,9 +1,7 @@
 package com.haulmont.testtask.model;
 
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -36,13 +34,13 @@ public class Bank {
         inverseJoinColumns = @JoinColumn(name = "customerId"))
     private Set<Customer> customers;
 
-    @OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private List<Credit> credits;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Credit> credits;
 
     public Bank() {
     }
 
-    public Bank(String bankName, Set<Customer> customers, List<Credit> credits) {
+    public Bank(String bankName, Set<Customer> customers, Set<Credit> credits) {
         this.bankName = bankName;
         this.customers = customers;
         this.credits = credits;
@@ -72,11 +70,11 @@ public class Bank {
         this.customers = customers;
     }
 
-    public List<Credit> getCredits() {
+    public Set<Credit> getCredits() {
         return this.credits;
     }
 
-    public void setCredits(List<Credit> credits) {
+    public void setCredits(Set<Credit> credits) {
         this.credits = credits;
     }
 }

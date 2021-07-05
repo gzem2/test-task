@@ -1,6 +1,7 @@
 package com.haulmont.testtask.service;
 
 import com.haulmont.testtask.model.Bank;
+import com.haulmont.testtask.model.CreditOffer;
 import com.haulmont.testtask.model.Customer;
 import com.haulmont.testtask.dao.CustomerDao;
 
@@ -26,21 +27,21 @@ public class CustomerService {
     public List<Customer> getAllCustomers() {
         return customerDao.findAll();
     }
- 
+
     @Transactional
     public Optional<Customer> getCustomer(UUID id) {
         return customerDao.findById(id);
     }
- 
+
     @Transactional
     public void saveCustomer(Customer customer) {
         customerDao.save(customer);
     }
- 
+
     @Transactional
     public void deleteCustomer(UUID id) {
         Set<Bank> customerBanks = bankService.getBanksForCustomerId(id);
-        for(Bank b : customerBanks) {
+        for (Bank b : customerBanks) {
             bankService.removeCustomerFromBank(b, customerDao.getById(id));
         }
         customerDao.deleteById(id);
@@ -50,7 +51,7 @@ public class CustomerService {
     public List<Customer> searchCustomer(Customer searchCustomer) {
         List<Customer> found = new ArrayList<>();
 
-        if(!searchCustomer.getCustomerName().trim().isEmpty()) {
+        if (!searchCustomer.getCustomerName().trim().isEmpty()) {
             found = customerDao.findByCustomerNameIgnoreCaseContaining(searchCustomer.getCustomerName());
         } else if (!searchCustomer.getPhone().trim().isEmpty()) {
             found = customerDao.findByPhoneIgnoreCaseContaining(searchCustomer.getPhone());
@@ -61,5 +62,15 @@ public class CustomerService {
         }
 
         return found;
+    }
+
+    @Transactional
+    public void removeCreditOfferFromCustomer(CreditOffer creditOffer, Customer customer) {
+        Set<CreditOffer> cr = customer.getCreditOffers();
+        if (cr.contains(creditOffer)) {
+            cr.remove(creditOffer);
+            customer.setCreditOffers(cr);
+            customerDao.save(customer);
+        }
     }
 }

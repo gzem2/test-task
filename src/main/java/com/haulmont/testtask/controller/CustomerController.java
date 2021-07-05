@@ -50,9 +50,9 @@ public class CustomerController {
     @PostMapping("/customer/new")
     public ModelAndView saveCustomer(@RequestParam Map<String, String> postBody) {
         String postId = postBody.get("id");
-        if(postId != null && !postId.trim().isEmpty()) {
+        if (postId != null && !postId.trim().isEmpty()) {
             UUID id = UUID.fromString(postId);
-            
+
             Optional<Customer> optEditCustomer = customerService.getCustomer(id);
             if (optEditCustomer.isPresent()) {
                 Customer editCustomer = optEditCustomer.get();

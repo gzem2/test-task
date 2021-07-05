@@ -6,12 +6,11 @@
 
 <head>
     <link href="<c:url value=" /css/main.css" />" rel="stylesheet">
+    <title>test-task</title>
 </head>
 
 <body>
     <div class="column column-sidebar">
         <div class="div-sidebar-button"><a class="button button-sidebar" href="${pageContext.request.contextPath}/customers">Клиенты</a></div>
         <div class="div-sidebar-button"><a class="button button-sidebar" href="${pageContext.request.contextPath}/banks">Банки</a></div>
-        <div class="div-sidebar-button"><a class="button button-sidebar" href="${pageContext.request.contextPath}/credits">Кредиты</a></div>
-        <div class="div-sidebar-button"><a class="button button-sidebar" href="${pageContext.request.contextPath}/credit-offers">Кредитные предложения</a></div>
     </div>

@@ -4,10 +4,10 @@
 <jsp:include page="../shared/header.jsp" />
 
 <div class="column column-content">
-    <form:form method="post" modelAttribute="credit" action="${pageContext.request.contextPath}/credit/new">
+    <form:form method="post" modelAttribute="credit" action="${pageContext.request.contextPath}/credit/new?bank=${bank.id}">
         <table>
             <tr>
-                <th colspan="2">Данные кредита</th>
+                <th colspan="2">Данные тарифного плана</th>
             </tr>
             <tr>
                 <form:hidden path="id" />
@@ -15,7 +15,7 @@
                     <form:label path="creditLimit">Лимит по кредиту:</form:label>
                 </td>
                 <td>
-                    <form:input path="creditLimit" size="30" maxlength="30"></form:input>
+                    <form:input type="number" path="creditLimit" size="30" maxlength="30"></form:input>
                 </td>
             </tr>
             <tr>
@@ -23,7 +23,7 @@
                     <form:label path="interestRate">Процентная ставка:</form:label>
                 </td>
                 <td>
-                    <form:input path="interestRate" size="30" maxlength="30"></form:input>
+                    <span class="percentInput"><form:input path="interestRate" type="number" max="100" accuracy="2" step="0.1" min="0"></form:input>%</span>
                 </td>
             </tr>
             <tr>
