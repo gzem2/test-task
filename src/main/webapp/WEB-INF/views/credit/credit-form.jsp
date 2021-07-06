@@ -15,12 +15,12 @@
                     <form:label path="creditLimit">Лимит по кредиту:</form:label>
                 </td>
                 <td>
-                    <form:input type="number" path="creditLimit" size="30" maxlength="30"></form:input>
+                    <form:input type="number" min="0" path="creditLimit" step="1000" ></form:input>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <form:label path="interestRate">Процентная ставка:</form:label>
+                    <form:label path="interestRate">Процентная ставка (годовая):</form:label>
                 </td>
                 <td>
                     <span class="percentInput"><form:input path="interestRate" type="number" max="100" accuracy="2" step="0.1" min="0"></form:input>%</span>

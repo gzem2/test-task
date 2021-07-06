@@ -20,18 +20,18 @@
                 <th width="120">Лимит по кредиту</th>
                 <th width="120">Процентная ставка</th>
                 <th width="120">Сумма кредита</th>
-                <th width="60">Платежи</th>
+                <th width="120">Срок кредита (месяцы)</th>
                 <th width="60">Редактировать</th>
                 <th width="60">Удалить</th>
             </tr>
             <c:forEach items="${creditOffers}" var="creditOffer">
                 <tr>
-                    <td>${creditOffer.id}</td>
-                    <td>${creditOffer.customer.customerName}</td>
-                    <td>${creditOffer.credit.creditLimit}</td>
-                    <td>${creditOffer.credit.interestRate}%</td>
-                    <td>${creditOffer.creditSum}</td>
-                    <td><a href="<c:url value='/creditOffer/edit/${creditOffer.id}?bank=${bank.id}' />">Платежи</a></td>
+                    <td><a href="<c:url value='/creditOffer/${creditOffer.id}?bank=${bank.id}' />">${creditOffer.id}</a></td>
+                    <td><a href="<c:url value='/creditOffer/${creditOffer.id}?bank=${bank.id}' />">${creditOffer.customer.customerName}</a></td>
+                    <td><a href="<c:url value='/creditOffer/${creditOffer.id}?bank=${bank.id}' />">${creditOffer.credit.creditLimit}</a></td>
+                    <td><a href="<c:url value='/creditOffer/${creditOffer.id}?bank=${bank.id}' />">${creditOffer.credit.interestRate}%</a></td>
+                    <td><a href="<c:url value='/creditOffer/${creditOffer.id}?bank=${bank.id}' />">${creditOffer.creditSum}</a></td>
+                    <td><a href="<c:url value='/creditOffer/${creditOffer.id}?bank=${bank.id}' />">${creditOffer.monthsTerm}</a></td>
                     <td><a href="<c:url value='/creditOffer/edit/${creditOffer.id}?bank=${bank.id}' />">Редактировать</a></td>
                     <td><a href="<c:url value='/creditOffer/delete/${creditOffer.id}?bank=${bank.id}' />">Удалить</a></td>
                 </tr>
@@ -41,7 +41,7 @@
     <c:if test="${!empty bank.credits}">
         <table class="tg">
             <tr>
-                <th colspan="5">Тарифные планы банка &laquo;${bank.bankName}&raquo;:</th>
+                <th colspan="6">Тарифные планы банка &laquo;${bank.bankName}&raquo;:</th>
             </tr>
             <tr>
                 <th width="80">Id</th>

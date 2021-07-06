@@ -3,8 +3,6 @@ package com.haulmont.testtask.model;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,6 +21,9 @@ public class Payment {
     @Column(name = "id")
     @GeneratedValue
     private UUID id;
+    
+    @Column(name = "paymentNum")
+    private Integer paymentNum;
 
     @Column(name = "dateOfPayment")
     private LocalDate dateOfPayment;
@@ -36,18 +37,20 @@ public class Payment {
     @Column(name = "interestDebt")
     private BigDecimal interestDebt;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "creditOfferId", referencedColumnName = "id")
     private CreditOffer creditOffer;
 
     public Payment() {
     }
 
-    public Payment(LocalDate dateOfPayment, BigDecimal payment, BigDecimal mainDebt, BigDecimal interestDebt) {
+    public Payment(LocalDate dateOfPayment, Integer paymentNum, BigDecimal payment, BigDecimal mainDebt, BigDecimal interestDebt, CreditOffer creditOffer) {
         this.dateOfPayment = dateOfPayment;
+        this.paymentNum = paymentNum;
         this.payment = payment;
         this.mainDebt = mainDebt;
         this.interestDebt = interestDebt;
+        this.creditOffer = creditOffer;
     }
 
     public UUID getId() {
@@ -67,7 +70,11 @@ public class Payment {
     }
 
     public BigDecimal getPayment() {
-        return this.payment;
+        if (this.payment != null) {
+            return new BigDecimal(this.payment.stripTrailingZeros().toPlainString());
+        } else {
+            return this.payment;
+        }
     }
 
     public void setPayment(BigDecimal payment) {
@@ -75,7 +82,11 @@ public class Payment {
     }
 
     public BigDecimal getMainDebt() {
-        return this.mainDebt;
+        if (this.mainDebt != null) {
+            return new BigDecimal(this.mainDebt.stripTrailingZeros().toPlainString());
+        } else {
+            return this.mainDebt;
+        }
     }
 
     public void setMainDebt(BigDecimal mainDebt) {
@@ -83,10 +94,30 @@ public class Payment {
     }
 
     public BigDecimal getInterestDebt() {
-        return this.interestDebt;
+        if (this.interestDebt != null) {
+            return new BigDecimal(this.interestDebt.stripTrailingZeros().toPlainString());
+        } else {
+            return this.interestDebt;
+        }
     }
 
     public void setInterestDebt(BigDecimal interestDebt) {
         this.interestDebt = interestDebt;
+    }
+    
+    public Integer getPaymentNum() {
+        return this.paymentNum;
+    }
+
+    public void setPaymentNum(Integer paymentNum) {
+        this.paymentNum = paymentNum;
+    }
+
+    public CreditOffer getCreditOffer() {
+        return this.creditOffer;
+    }
+
+    public void setCreditOffer(CreditOffer creditOffer) {
+        this.creditOffer = creditOffer;
     }
 }

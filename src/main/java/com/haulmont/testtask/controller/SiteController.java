@@ -10,4 +10,9 @@ public class SiteController {
     public ModelAndView showIndex() {
         return new ModelAndView("redirect:/customers");
     }
+
+    @GetMapping("/error")
+    public ModelAndView showError() {
+        return new ModelAndView("shared/error");
+    }
 }

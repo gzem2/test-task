@@ -28,7 +28,7 @@ public class Credit {
     private Double interestRate;
 
     @OneToMany(mappedBy = "credit", orphanRemoval = true)
-    private Set<CreditOffer> creditOffer;
+    private Set<CreditOffer> creditOffers;
 
     public Credit() {
     }
@@ -67,10 +67,10 @@ public class Credit {
     }
 
     public Set<CreditOffer> getCreditOffers() {
-        return this.creditOffer;
+        return this.creditOffers;
     }
 
     public void setCreditOffers(Set<CreditOffer> creditOffer) {
-        this.creditOffer = creditOffer;
+        this.creditOffers = creditOffer;
     }
 }

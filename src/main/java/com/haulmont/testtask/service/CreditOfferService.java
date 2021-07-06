@@ -25,8 +25,8 @@ public class CreditOfferService {
     }
 
     @Transactional
-    public void saveCreditOffer(CreditOffer credit) {
-        creditOfferDao.save(credit);
+    public void saveCreditOffer(CreditOffer creditOffer) {
+        creditOfferDao.save(creditOffer);
     }
 
     @Transactional
